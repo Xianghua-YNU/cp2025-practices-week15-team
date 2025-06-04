@@ -88,6 +88,7 @@ def solve_bvp_shooting_method(x_span, boundary_conditions, n_points=100, max_ite
         n_points (int): Number of discretization points
         max_iterations (int): Maximum iterations for shooting
         tolerance (float): Convergence tolerance
+    
     Returns:
         tuple: (x_array, y_array) solution arrays
     """
@@ -394,6 +395,3 @@ if __name__ == "__main__":
     results = compare_methods_and_plot()
     
     print("\n项目2完成！所有功能已实现并测试通过。")
-        print(f"Method comparison not yet implemented: {e}")
-    
-    print("\n请实现所有标记为 TODO 的函数以完成项目。")
