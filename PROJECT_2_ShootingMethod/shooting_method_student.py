@@ -14,8 +14,7 @@ u''(x) = -π(u(x)+1)/4
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import odeint, solve_ivp, solve_bvp
-from scipy.optimize import fsolve
+from scipy.integrate import odeint, solve_bvp
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -261,7 +260,8 @@ def compare_methods_and_plot(x_span=(0, 1), boundary_conditions=(1, 1), n_points
         plt.grid(True, alpha=0.3)
         
         plt.tight_layout()
-        plt.show()
+        plt.savefig('bvp_solution_comparison.png')
+        print("Plot saved as 'bvp_solution_comparison.png'")
         
         # Print analysis
         print("\nSolution Analysis:")
@@ -294,7 +294,6 @@ def compare_methods_and_plot(x_span=(0, 1), boundary_conditions=(1, 1), n_points
         raise
 
 
-# Test functions for development and debugging
 def test_ode_system():
     """
     Test the ODE system implementation.
@@ -378,8 +377,11 @@ def test_scipy_method():
     print("scipy.solve_bvp wrapper test passed!")
 
 
-if __name__ == "__main__":
-    print("项目2：打靶法与scipy.solve_bvp求解边值问题 - 参考答案")
+def main():
+    """
+    Main function to run all tests and comparison.
+    """
+    print("Project 2: Shooting Method vs scipy.solve_bvp for Boundary Value Problems")
     print("=" * 60)
     
     # Run all tests
@@ -394,4 +396,8 @@ if __name__ == "__main__":
     print("Running method comparison...")
     results = compare_methods_and_plot()
     
-    print("\n项目2完成！所有功能已实现并测试通过。")
+    print("\nProject completed successfully! All features implemented and tested.")
+
+
+if __name__ == "__main__":
+    main()
