@@ -19,9 +19,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-def ode_system_shooting(t, y):
+# 修复：交换参数顺序为 (y, t)
+def ode_system_shooting(y, t):
     """
-    Define the ODE system for shooting method.
+    Define the ODE system for shooting method (corrected parameter order).
     
     Convert the second-order ODE u'' = -π(u+1)/4 into a first-order system:
     y1 = u, y2 = u'
@@ -29,8 +30,8 @@ def ode_system_shooting(t, y):
     y2' = -π(y1+1)/4
     
     Args:
-        t (float): Independent variable (time/position)
         y (array): State vector [y1, y2] where y1=u, y2=u'
+        t (float): Independent variable (time/position)
     
     Returns:
         list: Derivatives [y1', y2']
@@ -109,7 +110,7 @@ def solve_bvp_shooting_method(x_span, boundary_conditions, n_points=100, max_ite
     m1 = -1.0  # First guess
     y0 = [u_left, m1]  # Initial conditions [u(0), u'(0)]
     
-    # Solve with first guess
+    # Solve with first guess (corrected function call)
     sol1 = odeint(ode_system_shooting, y0, x)
     u_end_1 = sol1[-1, 0]  # u(x_end) with first guess
     
@@ -294,6 +295,7 @@ def compare_methods_and_plot(x_span=(0, 1), boundary_conditions=(1, 1), n_points
         raise
 
 
+# 修复：更新测试函数中的参数顺序
 def test_ode_system():
     """
     Test the ODE system implementation.
@@ -304,8 +306,8 @@ def test_ode_system():
     t_test = 0.5
     y_test = np.array([1.0, 0.5])
     
-    # Test shooting method ODE system
-    dydt = ode_system_shooting(t_test, y_test)
+    # Test shooting method ODE system (corrected parameter order)
+    dydt = ode_system_shooting(y_test, t_test)
     expected = [0.5, -np.pi*(1.0+1)/4]
     print(f"ODE system (shooting): dydt = {dydt}")
     print(f"Expected: {expected}")
