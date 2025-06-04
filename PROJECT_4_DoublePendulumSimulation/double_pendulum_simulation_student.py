@@ -114,7 +114,7 @@ def calculate_energy(sol_arr, L_param=L_CONST, m_param=M_CONST, g_param=G_CONST)
     
     return T + V
 
-def animate_double_pendulum(t_arr, sol_arr, L_param=L_CONST, skip_frames=10):
+def animate_double_pendulum(t_arr, sol_arr, L_param=L_CONST, skip_frames=int):
     """
     创建双摆动画。
 
@@ -150,6 +150,7 @@ def animate_double_pendulum(t_arr, sol_arr, L_param=L_CONST, skip_frames=10):
     ax.set_title('Double Pendulum')
 
     line, = ax.plot([], [], 'o-', lw=2, markersize=8, color='blue')  # 摆臂和摆球
+    line2, = ax.plot([],[],'k')
     time_template = 'Time = %.1fs'
     time_text = ax.text(0.05, 0.9, '', transform=ax.transAxes)
 
@@ -163,9 +164,12 @@ def animate_double_pendulum(t_arr, sol_arr, L_param=L_CONST, skip_frames=10):
         """动画帧更新函数"""
         thisx = [0, x1[i], x2[i]]
         thisy = [0, y1[i], y2[i]]
+        sx = [x1[:i],x2[:i]]
+        sy = [y1[:i],y2[:i]]
         line.set_data(thisx, thisy)
+        line2.set_data(sx,sy)
         time_text.set_text(time_template % t_anim[i])
-        return line, time_text
+        return line, time_text, line2
 
     ani = animation.FuncAnimation(fig, animate, frames=len(t_anim),
                                   interval=25, blit=True, init_func=init)
@@ -219,11 +223,10 @@ if __name__ == "__main__":
              initial_energy + max(5*energy_variation, 1e-5))
     plt.show()
 
-    # 4. 可选动画
-    run_animation = True  # 设为True运行动画
+    run_animation = True
     if run_animation:
         print("创建动画中...")
-        anim_object = animate_double_pendulum(t_solution, sol_solution, skip_frames=max(1, t_points_sim // 100) * 5)
+        anim_object = animate_double_pendulum(t_solution, sol_solution, skip_frames=1)
         plt.show()
         print("动画展示完成")
     else:
